@@ -1,0 +1,27 @@
+import TI.BoeBot;
+import TI.PinMode;
+
+public class RobotMain {
+
+    public static void main(String[] args) {
+
+        //zet led 0 uit.
+        BoeBot.digitalWrite(4, false);
+
+        while (true) {
+            boolean state = BoeBot.digitalRead(8);
+            //lees de knop uit
+            if (state) {
+                //zet de led aan
+                BoeBot.digitalWrite(4, true);
+                BoeBot.wait(1000);
+                //led uit
+                BoeBot.digitalWrite(4, false);
+                BoeBot.wait(1000);
+            } else {
+                //zet de led uit
+                BoeBot.digitalWrite(4, false);
+            }
+        }
+    }
+}
