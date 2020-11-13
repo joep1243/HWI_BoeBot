@@ -1,0 +1,51 @@
+import TI.BoeBot;
+import TI.Timer;
+
+public class RobotMain {
+
+    public static void main(String[] args) {
+
+        Timer T1 = new Timer(1300);
+        Timer T2 = new Timer(700);
+        Timer T3 = new Timer(800);
+        Timer T4 = new Timer(1700);
+
+        T1.mark();
+        T3.mark();
+
+        while (true)
+        {
+            if (T1.timeout())
+            {boolean state = BoeBot.digitalRead(0);
+                if (state)
+                {BoeBot.digitalWrite(0, false);
+                    T2.mark();
+                }
+            }
+
+            if (T2.timeout())
+            {boolean state = BoeBot.digitalRead(0);
+                if (!state)
+                {BoeBot.digitalWrite(0, true);
+                    T1.mark();
+                }
+            }
+
+            if (T3.timeout())
+            {boolean state = BoeBot.digitalRead(4);
+                if (state)
+                {BoeBot.digitalWrite(4, false);
+                    T4.mark();
+                }
+            }
+
+            if (T4.timeout())
+            {boolean state = BoeBot.digitalRead(4);
+                if (!state)
+                {BoeBot.digitalWrite(4,true);
+                    T3.mark();
+                }
+            }
+            BoeBot.wait(1);}
+    }
+}
