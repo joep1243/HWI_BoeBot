@@ -1,0 +1,17 @@
+import TI.BoeBot;
+
+public class RobotMain {
+
+    public static void main(String[] args) {
+
+        boolean state = true;
+
+        while (true) {
+            state = !state;
+            BoeBot.digitalWrite(0, true);
+            BoeBot.wait(1000);
+            BoeBot.digitalWrite(0, false);
+            BoeBot.wait(2000);
+        }
+    }
+}
