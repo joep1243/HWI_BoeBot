@@ -1,0 +1,70 @@
+import TI.BoeBot;
+import TI.PinMode;
+import TI.Timer;
+
+public class RobotMain {
+
+    public static void main(String[] args) {
+
+        boolean state1 = false;
+        boolean state2 = false;
+
+        Timer t1 = new Timer(1000);
+        Timer t2 = new Timer(1000);
+        Timer t3 = new Timer(700);
+        Timer t4 = new Timer(700);
+        Timer t5 = new Timer(1300);
+        Timer t6 = new Timer(700);
+
+        t1.mark();
+        t3.mark();
+        t5.mark();
+
+        while (true) {
+            if (BoeBot.digitalRead(12) == true) {
+
+                if (t1.timeout() && (state1 == false)) {
+                    state1 = !state1;
+                    BoeBot.digitalWrite(4, state1);
+
+                    // Start timer 2
+                    t2.mark();
+                } else if (t2.timeout() && (state1 == true)) {
+                    state1 = !state1;
+                    BoeBot.digitalWrite(4, state1);
+                }
+            }
+
+            else if (BoeBot.digitalRead(12) == true) {
+                if (t3.timeout() && (state2 == false)) {
+                    state2 = !state2;
+                    BoeBot.digitalWrite(3, state2);
+
+                    // Start timer 4
+                    t4.mark();
+                } else if (t4.timeout() && (state2 == true)) {
+                    state2 = !state2;
+                    BoeBot.digitalWrite(3, state2);
+                }
+            }
+
+            else {
+                if (t5.timeout() && (state1 == false)) {
+                    state1 = !state1;
+                    BoeBot.digitalWrite(4, state1);
+                    BoeBot.digitalWrite(3, !state1);
+
+                    // Start timer 6
+                    t6.mark();
+                } else if (t6.timeout() && (state1 == true)) {
+                    state1 = !state1;
+                    BoeBot.digitalWrite(4, state1);
+                    BoeBot.digitalWrite(3, !state1);
+                }
+            }
+
+            // Fix voor de loop
+            BoeBot.wait(1);
+        }
+    }
+}
