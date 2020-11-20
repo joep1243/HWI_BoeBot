@@ -1,0 +1,35 @@
+import TI.BoeBot;
+import TI.PinMode;
+import TI.Timer;
+
+public class RobotMain {
+
+    public static void main(String[] args) {
+
+        boolean state1 = false;
+
+        Timer t1 = new Timer(1000);
+        Timer t2 = new Timer(1000);
+
+        t1.mark();
+
+        while (true) {
+            if (BoeBot.digitalRead(13) == true) {
+
+                if (t1.timeout() && (state1 == false)) {
+                    state1 = !state1;
+                    BoeBot.digitalWrite(4, state1);
+
+                    // Start timer 2
+                    t2.mark();
+                } else if (t2.timeout() && (state1 == true)) {
+                    state1 = !state1;
+                    BoeBot.digitalWrite(4, state1);
+                }
+            }
+
+            // Fix voor de loop
+            BoeBot.wait(1);
+        }
+    }
+}
