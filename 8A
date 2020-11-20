@@ -1,0 +1,28 @@
+import TI.BoeBot;
+import TI.PWM;
+import TI.Servo;
+import TI.Timer;
+
+public class RobotMain {
+    public static void main(String[] args) {
+        gaNaarSnelheid(200);
+    }
+
+
+    public static void gaNaarSnelheid(int snelheid){
+        int t;
+        Servo s1 = new Servo(12);               //Servo1 declareren
+        Servo s2 = new Servo(13);
+
+        for(t = 0; t < snelheid; t++) {
+            s1.update(1500 + t);
+            s2.update(1500 - t);
+
+            BoeBot.wait(20);            //Wachttijd instellen, (tellen naar 255 binnen 2 seconden)
+
+        }
+        s1.update(1500 + snelheid);
+        s2.update(1500 - snelheid);
+
+    }
+}
