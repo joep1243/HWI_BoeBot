@@ -1,0 +1,51 @@
+import TI.*;
+
+public class RobotMain {
+
+    static int AnalogPin1 = 2;  // Rechts
+    static int AnalogPin2 = 1;  // Midde 
+    static int AnalogPin3 = 0;  // Links
+
+    static Servo Slink = new Servo(13);
+    static Servo Srechts = new Servo(12);
+
+    static int NormaleSnelheid = 1500;
+    //kleine afweiking omdat me servo stom doet
+    static int NormaleSnelheid2 = 1500;
+    static int RaceSnelHeid = 50;
+    //zodat hij niet onnodig iets oppakt
+    static int Gevoeligheid = 400;
+
+    public static void main(String[] args) {
+
+        while (true) {
+            int sensor1 = BoeBot.analogRead(AnalogPin1);
+            int sensor2 = BoeBot.analogRead(AnalogPin2);
+            int sensor3 = BoeBot.analogRead(AnalogPin3);
+            BoeBot.wait(1);
+
+            if (((sensor1 >= Gevoeligheid) && (sensor2 <= Gevoeligheid) && (sensor3 <= Gevoeligheid)) || ((sensor1 >= Gevoeligheid) && (sensor2 >= Gevoeligheid) && (sensor3 <= Gevoeligheid))) {
+                System.out.println("Naar rechts draaien langzaam");
+                Slink.update(NormaleSnelheid);
+                Srechts.update(NormaleSnelheid2);
+                Slink.update(NormaleSnelheid);
+                Srechts.update(NormaleSnelheid2 + RaceSnelHeid);
+            } else if (((sensor1 <= Gevoeligheid) && (sensor2 <= Gevoeligheid) && (sensor3 >= Gevoeligheid)) || ((sensor1 <= Gevoeligheid) && (sensor2 >= Gevoeligheid) && (sensor3 >= Gevoeligheid))) {
+                System.out.println("Naar links draaien");
+                Slink.update(NormaleSnelheid);
+                Srechts.update(NormaleSnelheid2);
+                Slink.update(NormaleSnelheid - RaceSnelHeid);
+                Srechts.update(NormaleSnelheid2);
+            } else if ((sensor1 <= Gevoeligheid) && (sensor2 >= Gevoeligheid) && (sensor3 <= Gevoeligheid)) {
+                System.out.println("Naar voren");
+                Slink.update(NormaleSnelheid - RaceSnelHeid);
+                Srechts.update(NormaleSnelheid2 + RaceSnelHeid);
+            } else if ((sensor1 >= Gevoeligheid) && (sensor2 >= Gevoeligheid) && (sensor1 >= Gevoeligheid)) {
+                System.out.println("Alvast voor een kruispunt");
+                Slink.update(NormaleSnelheid - RaceSnelHeid);
+                Srechts.update(NormaleSnelheid2 + RaceSnelHeid);
+            }
+            BoeBot.wait(1);
+        }
+    }
+}
