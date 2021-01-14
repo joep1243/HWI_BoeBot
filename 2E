@@ -5,47 +5,39 @@ public class RobotMain {
 
     public static void main(String[] args) {
 
-        Timer T1 = new Timer(1300);
-        Timer T2 = new Timer(700);
-        Timer T3 = new Timer(800);
-        Timer T4 = new Timer(1700);
-
-        T1.mark();
-        T3.mark();
+        //zet de timers
+        Timer Timer1 = new Timer(1300);
+        Timer Timer2 = new Timer(700);
+        Timer Timer3 = new Timer(800);
+        Timer Timer4 = new Timer(1700);
+    
+        //start timer 1 en 3
+        Timer1.mark();
+        Timer3.mark();
 
         while (true)
         {
-            if (T1.timeout())
-            {boolean state = BoeBot.digitalRead(0);
+            //als timer 1 is afgelopen zet status naar waarde van 0  als state een waarde heeft zet 0 naar false start timer 2 (uit en aan)
+            if (Timer1.timeout()){boolean state = BoeBot.digitalRead(0);
                 if (state)
                 {BoeBot.digitalWrite(0, false);
-                    T2.mark();
-                }
-            }
-
-            if (T2.timeout())
-            {boolean state = BoeBot.digitalRead(0);
+                    Timer2.mark();}}
+            //geld hetzefde als hierboven
+            if (Timer2.timeout()){boolean state = BoeBot.digitalRead(0);
                 if (!state)
                 {BoeBot.digitalWrite(0, true);
-                    T1.mark();
-                }
-            }
-
-            if (T3.timeout())
-            {boolean state = BoeBot.digitalRead(4);
+                    Timer1.mark();}}
+        //geld hetzefde als hierboven
+            if (Timer3.timeout()){boolean state = BoeBot.digitalRead(4);
                 if (state)
                 {BoeBot.digitalWrite(4, false);
-                    T4.mark();
-                }
-            }
-
-            if (T4.timeout())
-            {boolean state = BoeBot.digitalRead(4);
+                    Timer4.mark();}}
+//geld hetzefde als hierboven
+            if (Timer4.timeout()){boolean state = BoeBot.digitalRead(4);
                 if (!state)
                 {BoeBot.digitalWrite(4,true);
-                    T3.mark();
-                }
-            }
+                    Timer3.mark();}}
+                    
             BoeBot.wait(1);}
     }
 }
