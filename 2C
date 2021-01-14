@@ -5,18 +5,26 @@ public class RobotMain {
 
     public static void main(String[] args) {
 
-        Timer T1 = new Timer(500);
-        Timer T2 = new Timer(1000);
+        //zet 2 timers 1 met 500ms en andere met 1sec
+        Timer Timer1 = new Timer(500);
+        Timer Timer2 = new Timer(1000);
+        
+        
+        //start timers
+        Timer1.mark();
+        Timer2.mark();
 
-        T1.mark();
-        T2.mark();
-
-        boolean state1 = true;
-        boolean state2 = true;
+        boolean status1 = true;
+        boolean status2 = true;
 
         while (true) {
-            if (T1.timeout()){state1 = !state1; BoeBot.digitalWrite(0, state1);}
-            if (T2.timeout()){state2 = !state2; BoeBot.digitalWrite(4, state2);}
+            //als timer 1 afloopt zet status 2 op false en 0 op status1
+            if (Timer1.timeout()){status1 = !status1;
+            BoeBot.digitalWrite(0, status1);}
+            
+            if (Timer2.timeout()){status2 = !status2;
+            BoeBot.digitalWrite(4, status2);}
+            //wacht 1ms
             BoeBot.wait(1);
         }
     }
