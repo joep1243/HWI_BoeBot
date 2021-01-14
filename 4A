@@ -3,33 +3,33 @@ import TI.PinMode;
 import TI.Timer;
 
 public class RobotMain {
-
     public static void main(String[] args) {
 
-        boolean state1 = false;
+        boolean state = false;
+        
+        //zet timers op 1sec
+        Timer timer1 = new Timer(1000);
+        Timer timer2 = new Timer(1000);
 
-        Timer t1 = new Timer(1000);
-        Timer t2 = new Timer(1000);
-
-        t1.mark();
+// Start timer 1
+        timer1.mark();
 
         while (true) {
+        //als 12 true is voer uit
             if (BoeBot.digitalRead(13) == true) {
-
-                if (t1.timeout() && (state1 == false)) {
-                    state1 = !state1;
-                    BoeBot.digitalWrite(4, state1);
+                //als timer1 afgelopen is en staet false zet state op true
+                if (timer1.timeout() && (state == false)){state = !state;
+                    BoeBot.digitalWrite(4, state);
 
                     // Start timer 2
-                    t2.mark();
-                } else if (t2.timeout() && (state1 == true)) {
-                    state1 = !state1;
-                    BoeBot.digitalWrite(4, state1);
+                    timer2.mark();
+                    //hetzefde als hierboven aleen dan met timer2 en state op true
+                } else if (timer2.timeout() && (state == true)){state = !state;
+                    BoeBot.digitalWrite(4, state);
                 }
             }
 
-            // Fix voor de loop
+            //wacht 1ms
             BoeBot.wait(1);
         }
-    }
-}
+    }}
