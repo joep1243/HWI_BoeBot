@@ -2,22 +2,18 @@ import TI.BoeBot;
 import TI.PinMode;
 
 public class RobotMain {
-
     public static void main(String[] args) {
 
         //zet led 0 uit.
         BoeBot.digitalWrite(4, false);
 
-        while (true) {
+        while (true){
+            //krijg status van 8
             boolean state = BoeBot.digitalRead(8);
-            //lees de knop uit
-            if (state) {
-                //zet de led aan
-                BoeBot.digitalWrite(4, true);
-            } else {
-                //zet de led uit
-                BoeBot.digitalWrite(4, false);
-            }
+            
+            //4 aan
+            if (state) {BoeBot.digitalWrite(4, true);
+            //4 uit
+            }else{BoeBot.digitalWrite(4, false);}
         }
-    }
-}
+    }}
