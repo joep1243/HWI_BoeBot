@@ -5,11 +5,14 @@ public class RobotMain {
 
     public static void main(String[] args) {
 
-        boolean state = true;
+        boolean status = true;
 
         while (true) {
-            state = !state;
-            BoeBot.digitalWrite(0, state);
+            //status is niet gelijk aan status
+            status = !status;
+            //0 is status
+            BoeBot.digitalWrite(0, status);
+            //wacht 10ms
             BoeBot.wait(10);
         }
     }
