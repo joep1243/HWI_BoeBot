@@ -3,14 +3,19 @@ import TI.BoeBot;
 public class RobotMain {
 
     public static void main(String[] args) {
-
-        boolean state = true;
+          
+        boolean status = true;
 
         while (true) {
-            state = !state;
+            //status is niet gelijk aan status
+            status = !status;
+            //zet 0 op true
             BoeBot.digitalWrite(0, true);
+            //wacht 1 sec
             BoeBot.wait(1000);
+            //zet 0 op false
             BoeBot.digitalWrite(0, false);
+            //wacht 2sec
             BoeBot.wait(2000);
         }
     }
