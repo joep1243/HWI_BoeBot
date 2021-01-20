@@ -2,15 +2,14 @@ import TI.BoeBot;
 import TI.PWM;
 
 public class RobotMain {
-
     public static void main(String[] args) {
-
+        //zet pwm op 4 op 128
         PWM pwm = new PWM(4, 128);
+        //startpwm
         pwm.start();
 
         while (true) {
-
+            //wacht 100ms
             BoeBot.wait(100);
         }
-    }
-}
+    }}
