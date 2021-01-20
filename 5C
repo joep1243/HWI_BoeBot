@@ -2,19 +2,23 @@ import TI.BoeBot;
 import TI.PWM;
 
 public class RobotMain {
-
     public static void main(String[] args) {
 
-
-        int duty =0;
+        //zet cycles op 0
+        int cycles = 0;
+        
         while (true) {
-            ++duty;
-            if(duty <= 255) {
-                PWM pwm = new PWM(4, duty);
+        //cycles +1
+            ++cycles;
+            //als cycles kleiner of gelijkis aan 255 voer uit
+            if(cycles <= 255) {
+            //zet pwm op 4 op waarde van cycles
+                PWM pwm = new PWM(4, cycles);
+                //pwm start
                 pwm.start();
-
-            }else{duty = 0;}
+            //anders zet cycles op 0
+            }else{cycles = 0;}
+            //wacht 7.843 ms
             BoeBot.wait(2000/255);
         }
-    }
-}
+    }}
