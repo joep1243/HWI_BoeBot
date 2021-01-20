@@ -3,17 +3,18 @@ import TI.PWM;
 import TI.Servo;
 
 public class RobotMain {
-
     public static void main(String[] args) {
 
-        Servo S1 = new Servo(12);
-        Servo S2 = new Servo(13);
+//zet servo op 12 en 13
+        Servo servo1 = new Servo(12);
+        Servo servo2 = new Servo(13);
 
-        S1.update(1500);
-        S2.update(1500);
+        //zet servos op 1500 stil
+        servo1.update(1500);
+        servo2.update(1500);
 
         while (true) {
+        //wacht 1sec
             BoeBot.wait(1000);
         }
-    }
-}
+    }}
