@@ -14,14 +14,14 @@ public class RobotMain {
                     //lenggte lijst
                     int lengtes[] = new int [12];
                     //i is 0 als i kleiner is dan 12 i++
-                    for(int i=0; i<12; i++)
+                    for(int i=0; i<12; i++){
                     //zet pulse lenget in lentes
                         lengtes[i] = BoeBot.pulseIn(1,false,20000);
-
-                    for(int i=0;i<12; i++)
+}
+                    for(int i=0;i<12; i++){
                     //print lengets
                         System.out.print(lengtes[i]+",");
-                        System.out.println(" ");
+                        System.out.println(" ");}
             }
             //wacht 10ms
                 BoeBot.wait(10);
