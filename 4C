@@ -3,68 +3,65 @@ import TI.PinMode;
 import TI.Timer;
 
 public class RobotMain {
-
     public static void main(String[] args) {
 
+    //zet tates op false
         boolean state1 = false;
         boolean state2 = false;
-
-        Timer t1 = new Timer(1000);
-        Timer t2 = new Timer(1000);
-        Timer t3 = new Timer(700);
-        Timer t4 = new Timer(700);
-        Timer t5 = new Timer(1300);
-        Timer t6 = new Timer(700);
-
-        t1.mark();
-        t3.mark();
-        t5.mark();
+        
+        
+            //zet timers met hun eigen tijd
+        Timer timer1 = new Timer(1000);
+        Timer timer2 = new Timer(1000);
+        Timer timer3 = new Timer(700);
+        Timer timer4 = new Timer(700);
+        Timer timer5 = new Timer(1300);
+        Timer timer6 = new Timer(700);
+        
+        //start timer 1,3,5
+        timer1.mark();
+        timer3.mark();
+        timer5.mark();
 
         while (true) {
-            if (BoeBot.digitalRead(12) == true) {
-
-                if (t1.timeout() && (state1 == false)) {
-                    state1 = !state1;
+        
+        //als pin 12 aan is en timer 1 en state1 op false staan zet 4 op true
+            if (BoeBot.digitalRead(12) == true){
+                if (timer1.timeout() && (state1 == false)){state1 = !state1;
                     BoeBot.digitalWrite(4, state1);
-
-                    // Start timer 2
-                    t2.mark();
-                } else if (t2.timeout() && (state1 == true)) {
+                    // Start timer2
+                    timer2.mark();
+                    //anders als timer2 enstate op true staat zet pin 4 opfalse
+                } else if (timer2.timeout() && (state1 == true)) {
                     state1 = !state1;
                     BoeBot.digitalWrite(4, state1);
                 }
             }
-
-            else if (BoeBot.digitalRead(12) == true) {
-                if (t3.timeout() && (state2 == false)) {
-                    state2 = !state2;
+//heeft dezelfde opbouw als de orige if
+            else if (BoeBot.digitalRead(12) == true){
+                if (timer3.timeout() && (state2 == false)){state2 = !state2;
                     BoeBot.digitalWrite(3, state2);
 
                     // Start timer 4
-                    t4.mark();
-                } else if (t4.timeout() && (state2 == true)) {
-                    state2 = !state2;
+                    timer4.mark();
+                } else if (timer4.timeout() && (state2 == true)){state2 = !state2;
                     BoeBot.digitalWrite(3, state2);
                 }
             }
 
             else {
-                if (t5.timeout() && (state1 == false)) {
-                    state1 = !state1;
+            //heeft dezelfde opbouw als de vorige if
+                if (timer5.timeout() && (state1 == false)) {state1 = !state1;
                     BoeBot.digitalWrite(4, state1);
                     BoeBot.digitalWrite(3, !state1);
-
                     // Start timer 6
-                    t6.mark();
-                } else if (t6.timeout() && (state1 == true)) {
-                    state1 = !state1;
+                    timer6.mark();
+                } else if (timer6.timeout() && (state1 == true)) {state1 = !state1;
                     BoeBot.digitalWrite(4, state1);
                     BoeBot.digitalWrite(3, !state1);
                 }
             }
-
-            // Fix voor de loop
+            //wacht 1ms
             BoeBot.wait(1);
         }
-    }
-}
+    }}
