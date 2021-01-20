@@ -2,51 +2,48 @@ import TI.BoeBot;
 import TI.PinMode;
 
 public class RobotMain {
-
     public static void main(String[] args) {
-        //in Samen werking gemaakt met mijn groeps genood marvin.
 
         while (true) {
-            // Maak de variable Ibinary aan
-            String iBinary = "";
-            // maak variable iAfstandknop
-            int iAfstandKnop ;
+            // benodigde variables
+            String icode = "";
+            int iKnop ;
 
-            // Pulse lengte van de afstandbediening ophalen
-            int PulseLength = BoeBot.pulseIn(0, false, 6000);
-            // als de lengte hoger is dan 2000
-            if (PulseLength > 2000) {
-                // Variabele aanmaken voor de waardes uit de pulselengte
+             //kijk naar pulse lengte
+            int Pulselengte = BoeBot.pulseIn(0, false, 6000);
+            
+            //als pulse lengte groter is dan 2000 voer uit
+            if (Pulselengte > 2000){
+                // lengnte lijs
                 int lengtes[] = new int[12];
 
-                // Door de waardes lopen en in de array zetten
-                for (int i = 0; i < 12; i++) {
-                    lengtes[i] = BoeBot.pulseIn(0, false, 20000);
-                }
+                //i is 0 als i kleiner is dan 12 i++
+                for (int i = 0; i < 12; i++){lengtes[i] = BoeBot.pulseIn(0, false, 20000);}
 
-                // Door de array lopen en de lengtes omzetten 0 of 1
+               //i is 0 als i kleiner is dan 12 i++
                 for (int i = 0; i < 12; i++) {
-                    // Waardes omzetten en aan de binary string toevoegen
-                    iBinary += getBinary(lengtes[i]);
+                    // waardes omzetten en in icode zetten
+                    icode += waardes(lengtes[i]);
                 }
-
-                // Knop van afstandsbediening ophalen
-                iAfstandKnop = getNumberRemote(iBinary);
-                // Knop afstandsbediening uitprinten
-                System.out.println("Kmop = " + iAfstandKnop);
+                
+                // knop code van aftands bediening
+                iKnop = getNumberRemote(icode);
+                
+                //print iknop
+                System.out.println("Kmop = " + iKnop);
             }
             // Even wachten
             BoeBot.wait(10);
         }
     }
-    public static int getBinary(int iPulseIn) {
-        // Kijken of de pulse waarde boven of onder de 1000 is
-        if (iPulseIn > 1000) {
-            // Groter als 1000
+    
+    public static int waardes(int ilengte) {
+    
+        // als ilengte groter is dan 1000 return 1
+        if (ilengte > 1000) {
             return 1;
-        } else {
-            // Kleiner als 1000
+            //anders return 0
+        }else{
             return 0;
         }
-    }
-}
+    }}
