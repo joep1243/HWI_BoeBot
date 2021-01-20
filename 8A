@@ -29,9 +29,6 @@ static Servo sLinks = new Servo(13);
                 //wacht 15 ms anders gaat het te snel
                 BoeBot.wait(15);
             }
-            
-            // rem aanroepen
-            rem();
                   
         } else {
             // zet motor waarde op start dus stil
