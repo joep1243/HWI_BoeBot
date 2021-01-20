@@ -3,20 +3,22 @@ import TI.BoeBot;
 import TI.PinMode;
 
 public class RobotMain {
-
     public static void main(String[] args) {
 
-
-        while (true) {
-    int analogewaarde1 = BoeBot.analogRead(0);
-    int analogewaarde2 = BoeBot.analogRead(1);
-    int analogewaarde3 = BoeBot.analogRead(2);
+   while (true) {
+   //lees pin waardes van 0,1,2
+    int waarde1 = BoeBot.analogRead(0);
+    int waarde2 = BoeBot.analogRead(1);
+    int waarde3 = BoeBot.analogRead(2);
+    //wact 1sec
     BoeBot.wait(1000);
-            System.out.println("Analoge waarde van 1: "+ analogewaarde1);
-            System.out.println("Analoge waarde van 2: "+ analogewaarde2);
-            System.out.println("Analoge waarde van 3: "+ analogewaarde3);
-            BoeBot.wait(50);
+    
+            //print waardes
+            System.out.println("waarde 1: "+ waarde1);
+            System.out.println("waarde 2: "+ waarde2);
+            System.out.println("waarde 3: "+ waarde3);
+            //wacht 60ms
+            BoeBot.wait(60);
 
         }
-    }
-}
+    }}
