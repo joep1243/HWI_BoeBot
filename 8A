@@ -4,25 +4,38 @@ import TI.Servo;
 import TI.Timer;
 
 public class RobotMain {
+// zet servo op 13 en 12
+static Servo sLinks = new Servo(13);
+    static Servo sRechts = new Servo(12);
+    
     public static void main(String[] args) {
-        gaNaarSnelheid(200);
+        snelheid(200);
     }
 
 
-    public static void gaNaarSnelheid(int snelheid){
-        int t;
-        Servo s1 = new Servo(12);               //Servo1 declareren
-        Servo s2 = new Servo(13);
+    //ga naar aangegevnen snelheid
+    public static void snelheid(int hoogte) {
+    
+        // start snelheid
+        int istart = 1500;
 
-        for(t = 0; t < snelheid; t++) {
-            s1.update(1500 + t);
-            s2.update(1500 - t);
-
-            BoeBot.wait(20);            //Wachttijd instellen, (tellen naar 255 binnen 2 seconden)
-
+        // als hoogte hoger is dan 0 ga lankzaam naar snelheid
+        if (hoogte > 0) {
+        
+          //i is 0 i kleiner dan hoogte i+1
+            for (int i = 0; i < hoogte; i++) {
+                RobotMain.sLinks.update(istart - i);
+                RobotMain.sRechts.update(istart + i);
+                //wacht 15 ms anders gaat het te snel
+                BoeBot.wait(15);
+            }
+            
+            // rem aanroepen
+            rem();
+                  
+        } else {
+            // zet motor waarde op start dus stil
+            RobotMain.sLinks.update(istart);
+            RobotMain.sRechts.update(istart);
         }
-        s1.update(1500 + snelheid);
-        s2.update(1500 - snelheid);
-
-    }
-}
+    }}
