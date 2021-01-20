@@ -5,15 +5,16 @@ import TI.BoeBot;
 public class RobotMain {
 
     public static void main(String[] args) {
+//zet servo op 12 en 13
+        Servo servo1 = new Servo(12);
+        Servo servo2 = new Servo(13);
 
-        Servo S1 = new Servo(12);
-        Servo S2 = new Servo(13);
-
-        S1.update(1700);
-        S2.update(1300);
+        //zet servos op 1700 en 1300 rijden dus
+        servo1.update(1700);
+        servo2.update(1300);
 
         while (true) {
+        //wacht 1sec
             BoeBot.wait(1000);
         }
-    }
-}
+    }}
