@@ -1,0 +1,127 @@
+import TI.BoeBot;
+import TI.PinMode;
+import TI.Servo;
+public class RobotMain {
+    // zet servo op 13 en 12
+    static Servo sLinks = new Servo(13);
+    static Servo sRechts = new Servo(12);
+
+    public static void main(String[] args) {
+
+        snelheid(200);
+
+        while (true) {
+            // pulse vesturen
+            BoeBot.digitalWrite(0, true);
+            BoeBot.wait(1);
+            BoeBot.digitalWrite(0, false);
+
+            //wacht voor ontvangen
+            int pulseLength = BoeBot.pulseIn(1, true, 10000) / 58;
+
+            // als pulse waarde kleiner of gelijk is aan 20 voer uit
+            if (pulseLength <= 20) {
+                // achteruit
+                snelheid(-125);
+                // draaien
+                draai(180, 50);
+                // rijden
+                snelheid(200);
+            }
+            //wacht 55ms
+            BoeBot.wait(55);
+        }
+    }
+
+    //ga naar aangegevnen snelheid
+    public static void snelheid(int hoogte) {
+    
+        // start snelheid
+        int istart = 1500;
+
+        // als hoogte hoger is dan 0 ga lankzaam naar snelheid
+        if (hoogte > 0) {
+        
+          //i is 0 i kleiner dan hoogte i+1
+            for (int i = 0; i < hoogte; i++) {
+                RobotMain.sLinks.update(istart - i);
+                RobotMain.sRechts.update(istart + i);
+                //wacht 15 ms anders gaat het te snel
+                BoeBot.wait(15);
+            }
+            
+            // rem aanroepen
+            rem();
+            
+            //als hooget kleiner is dan 0 rij achteruit
+        } else if (hoogte < 0) {
+        //i is 0 i groter dan hoogte i-1
+            for (int i = 0; i > hoogte; i--) {
+                RobotMain.sLinks.update(istart - i);
+                RobotMain.sRechts.update(istart + i);
+                //wacht 23ms om lanksaam achteruit te gaan
+                BoeBot.wait(23);
+            }
+            
+            
+            // rem aanroepen
+            rem();
+            
+        } else {
+            // zet motor waarde op start dus stil
+            RobotMain.sLinks.update(istart);
+            RobotMain.sRechts.update(istart);
+        }
+    }
+    
+
+    public static void draai(int graden, int snelheid) {
+    
+    // start snelheid
+        int istart = 1500;
+    
+        // als snelheid groter is dan 0
+        if (snelheid > 0){
+        
+            // berenken draaitijd
+            int TPG = 430 / snelheid;
+
+            // bot laten draaine
+            RobotMain.sLinks.update(istart + snelheid);
+            RobotMain.sRechts.update(istart + snelheid);
+            
+            // wacht berekende tijd
+            BoeBot.wait(TPG * graden);
+
+            // Boebot stoppen
+            rem();
+            
+            //als snelheid kleiner dan 0 is
+        } else if (snelheid < 0) {
+        
+            // -snelhei waarde naar positive waarde
+            snelheid = Math.abs(snelheid);
+
+            // berenken draaitijd
+            int TPG = 430 / snelheid;
+
+            // bot draaien
+            RobotMain.sLinks.update(istart - snelheid);
+            RobotMain.sRechts.update(istart - snelheid);
+            
+            // wacht berekende tijd
+            BoeBot.wait(TPG * graden);
+
+            // Boebot stoppen
+            rem();
+            
+        }
+    }
+
+     public static void rem() {
+        //zet moteoren stil
+        RobotMain.sLinks.update(1500);
+        RobotMain.sRechts.update(1500);
+
+        BoeBot.wait(270);
+    }}
