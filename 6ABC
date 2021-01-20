@@ -2,102 +2,117 @@ import TI.BoeBot;
 import TI.Servo;
 
 public class RobotMain {
-
-    // Servo motoren defineren
+    // zet servo op 13 en 12
     static Servo sLinks = new Servo(13);
     static Servo sRechts = new Servo(12);
-
     public static void main(String[] args) {
-        // Even wachten zodat ik de Boebot op de grond kan zetten
-        BoeBot.wait(10000);
 
         while(true) {
+        //om de vorm temaken die je wlt uncomment en start
+            // rondje maken
+            draai(360, 100);
+            
             // Vierkant maken
-           // toSpeed(200);
-            //turnDegrees(90, 50);
+            // snelheid(200);
+            //draai(90, 50);
 
-            // Driehoek maken
-            //toSpeed(200);
-            //turnDegrees(120, 50);
-
-            // Cirkel maken
-            //turnDegrees(360, 100);
-
+            // Diehoek maken
+            //snelheid(200);
+            //draai(120, 50);
         }
     }
 
-    // Functie om de snelheid van de Boebot aan te passen
-    public static void toSpeed(int speed) {
-        // Standaard snelheid
-        int iDefault = 1500;
+    //ga naar aangegevnen snelheid
+    public static void snelheid(int hoogte) {
+    
+        // start snelheid
+        int istart = 1500;
 
-        // Als de snelheid hoger is dan 0
-        if (speed > 0) {
-            // Loopen door de snelheid en de Boebot langzaam sneller laten gaan
-            for (int i = 0; i < speed; i++) {
-                // Nieuwe snelheid op de Boebot zetten
-                RobotMain.sLinks.update(iDefault - i);
-                RobotMain.sRechts.update(iDefault + i);
-                BoeBot.wait(10);
-                System.out.println(iDefault + i);
+        // als hoogte hoger is dan 0 ga lankzaam naar snelheid
+        if (hoogte > 0) {
+        
+          //i is 0 i kleiner dan hoogte i+1
+            for (int i = 0; i < hoogte; i++) {
+                RobotMain.sLinks.update(istart - i);
+                RobotMain.sRechts.update(istart + i);
+                //wacht 15 ms anders gaat het te snel
+                BoeBot.wait(15);
             }
-            // Noodrem activeren
-            emergencyBrake();
-        } else if (speed < 0) {
-            // De Boebot achteruit laten rijden
-            for (int i = 0; i > speed; i--) {
-                // Snelheid op de Boebot
-                RobotMain.sLinks.update(iDefault - i);
-                RobotMain.sRechts.update(iDefault + i);
-                BoeBot.wait(20);
-                System.out.println(i);
+            
+            // rem aanroepen
+            rem();
+            
+            //als hooget kleiner is dan 0 rij achteruit
+        } else if (hoogte < 0) {
+        //i is 0 i groter dan hoogte i-1
+            for (int i = 0; i > hoogte; i--) {
+                RobotMain.sLinks.update(istart - i);
+                RobotMain.sRechts.update(istart + i);
+                //wacht 23ms om lanksaam achteruit te gaan
+                BoeBot.wait(23);
             }
-            // Noodrem activeren
-            emergencyBrake();
+            
+            
+            // rem aanroepen
+            rem();
+            
         } else {
-            // Boebot stil laten staan
-            RobotMain.sLinks.update(iDefault);
-            RobotMain.sRechts.update(iDefault);
+            // zet motor waarde op start dus stil
+            RobotMain.sLinks.update(istart);
+            RobotMain.sRechts.update(istart);
+        }
+    }
+    
+
+    public static void draai(int graden, int snelheid) {
+    
+    // start snelheid
+        int istart = 1500;
+    
+        // als snelheid groter is dan 0
+        if (snelheid > 0){
+        
+            // berenken draaitijd
+            int TPG = 430 / snelheid;
+
+            // bot laten draaine
+            RobotMain.sLinks.update(istart + snelheid);
+            RobotMain.sRechts.update(istart + snelheid);
+            
+            // wacht berekende tijd
+            BoeBot.wait(TPG * graden);
+
+            // Boebot stoppen
+            rem();
+            
+            //als snelheid kleiner dan 0 is
+        } else if (snelheid < 0) {
+        
+            // -snelhei waarde naar positive waarde
+            snelheid = Math.abs(snelheid);
+
+            // berenken draaitijd
+            int TPG = 430 / snelheid;
+
+            // bot draaien
+            RobotMain.sLinks.update(istart - snelheid);
+            RobotMain.sRechts.update(istart - snelheid);
+            
+            // wacht berekende tijd
+            BoeBot.wait(TPG * graden);
+
+            // Boebot stoppen
+            rem();
+            
         }
     }
 
-    public static void turnDegrees(int degrees, int turningSpeed) {
-        // kijken of het getal groter is dan 0
-        if (turningSpeed > 0){
-            // Tijd om te draaien bereken
-            int timePerDegree = 440 / turningSpeed;
 
-            // Boebot laten draaien
-            RobotMain.sLinks.update(1500 + turningSpeed);
-            RobotMain.sRechts.update(1500 + turningSpeed);
-            // Boebot de berekende tijd laten wachten
-            BoeBot.wait(timePerDegree * degrees);
-
-            // Boebot stoppen
-            emergencyBrake();
-        } else if (turningSpeed < 0) {
-            // Negatieve snelheid omdraaien naar positieve snelheid
-            turningSpeed = Math.abs(turningSpeed);
-
-            // Tijd om te draaien bereken
-            int timePerDegree = 440 / turningSpeed;
-
-            // Boebot laten draaien
-            RobotMain.sLinks.update(1500 - turningSpeed);
-            RobotMain.sRechts.update(1500 - turningSpeed);
-            // Boebot de berekende tijd laten wachten
-            BoeBot.wait(timePerDegree * degrees);
-
-            // Boebot stoppen
-            emergencyBrake();
-        }
-    }
-
-    public static void emergencyBrake() {
-        // Boebot stil laten staan
+    public static void rem() {
+        //zet moteoren stil
         RobotMain.sLinks.update(1500);
         RobotMain.sRechts.update(1500);
 
-        BoeBot.wait(250);
+        BoeBot.wait(270);
     }
 }
